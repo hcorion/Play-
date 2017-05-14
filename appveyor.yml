@@ -1,6 +1,7 @@
 version: '{build}'
+image: Visual Studio 2017
 environment:
-  BUILD_TYPE: Visual Studio 14 2015 Win64
+  BUILD_TYPE: Visual Studio 15 2017 Win64
   matrix:
   - CONFIG_TYPE: Release
 build_script:
