@@ -464,10 +464,13 @@ uint32 CSpuBase::ReceiveDma(uint8* buffer, uint32 blockSize, uint32 blockAmount)
 #endif
 	if(m_transferMode == TRANSFER_MODE_VOICE)
 	{
+		//DMA transfers need to be throttled 
+		//- Needed by FFX's IopSoundDriver to properly synchronize itself
+		//- Needed by Genso Suikoden 5 also because it will be stuck in a loop otherwise
+		blockAmount = std::min<uint32>(blockAmount, 0x10);
 		if((m_ctrl & CONTROL_DMA) == CONTROL_DMA_READ)
 		{
-			//DMA reads need to be throttled to allow FFX IopSoundDriver to properly synchronize itself
-			blockAmount = std::min<uint32>(blockAmount, 0x10);
+			//Not implemented
 			return blockAmount;
 		}
 		unsigned int blocksTransfered = 0;
